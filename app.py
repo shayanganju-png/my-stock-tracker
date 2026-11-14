@@ -19,11 +19,11 @@ if st.button("Add to Watchlist"):
           stock_data_fetch = yf.download(ticker, period="5d", multi_level_index=False)
           live_market_price = float(stock_data_fetch['Close'].iloc[-1])
          # 2. Download a longer 50-day timeline to check market trends
-        history_data = yf.download(ticker, period="50d", multi_level_index=False)
+          history_data = yf.download(ticker, period="50d", multi_level_index=False)
         
         # 3. Calculate the short-term trend vs long-term trend
-        short_trend = float(history_data['Close'].rolling(window=10).mean().iloc[-1])
-        long_trend = float(history_data['Close'].rolling(window=30).mean().iloc[-1])
+          short_trend = float(history_data['Close'].rolling(window=10).mean().iloc[-1])
+          long_trend = float(history_data['Close'].rolling(window=30).mean().iloc[-1])
         
         # 4. Core Decision Logic: Compare the trends to create a Buy/Sell signal
         if short_trend > long_trend:
