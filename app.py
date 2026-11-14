@@ -43,13 +43,13 @@ if st.button("Add to Watchlist"):
     else:
         st.error("Please enter a valid stock ticker symbol.")
         st.write("---")
-st.subheader("📋 Portfolio Summary View")
+    st.subheader("📋 Portfolio Summary View")
 for item in st.session_state.portfolio_list:
- # Calculate the profit or loss percent
-        pct_change = ((item['live_price'] - item['buy_price']) / item['buy_price']) * 100
+    pct_change = ((item['live_price'] - item['buy_price']) / item['buy_price']) * 100
 
-        if pct_change >= 0:
-           st.success(f"🔺 {item['symbol']} | Live: ${item['live_price']:.2f} | Gain: +{pct_change:.2f}% | Advice: {item['status_signal']}")
+    if pct_change >= 0:
+        st.success(f"🔺 {item['symbol']} | Live: ${item['live_price']:.2f} | Gain: +{pct_change:.2f}% | Advice: {item['status_signal']}")
     else:
         st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}% | Advice: {item['status_signal']}")
+
       
