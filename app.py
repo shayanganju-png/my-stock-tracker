@@ -26,9 +26,9 @@ if st.button("Add to Watchlist"):
           long_trend = float(history_data['Close'].rolling(window=30).mean().iloc[-1])
         
         # 4. Core Decision Logic: Compare the trends to create a Buy/Sell signal
-        if short_trend > long_trend:
+          if short_trend > long_trend:
             signal = "🟢 STRONG BUY"
-        else:
+          else:
             signal = "🔴 SELL / AVOID"
         # 5. Package everything up with the dictionary labels
         stock_package = {
