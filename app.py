@@ -70,8 +70,3 @@ for item in st.session_state.portfolio_list:
     
     # 4. Hide the background side legends so the dashboard looks perfectly clean
     fig.update_layout(showlegend=False)
-
-    )
-    
-    # 4. Project the visual graph widget model right onto your live webpage dashboard
-    st.plotly_chart(fig, use_container_width=True)
