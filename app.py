@@ -15,28 +15,28 @@ if st.button("Add to Watchlist"):
     if ticker != "":
           st.success(f"Added {ticker} to your tracking dashboard!")
         
-        # 1. Download live market data from Wall Street
+        #  Download live market data from Wall Street
           stock_data_fetch = yf.download(ticker, period="5d", multi_level_index=False)
           live_market_price = float(stock_data_fetch['Close'].iloc[-1])
-         # 2. Download a longer 50-day timeline to check market trends
+         #  Download a longer 50-day timeline to check market trends
           history_data = yf.download(ticker, period="50d", multi_level_index=False)
         
-        # 3. Calculate the short-term trend vs long-term trend
+        #  Calculate the short-term trend vs long-term trend
           short_trend = float(history_data['Close'].rolling(window=10).mean().iloc[-1])
           long_trend = float(history_data['Close'].rolling(window=30).mean().iloc[-1])
         
-        # 4. Core Decision Logic: Compare the trends to create a Buy/Sell signal
+        # Core Decision Logic: Compare the trends to create a Buy/Sell signal
           if short_trend > long_trend:
             signal = "🟢 STRONG BUY"
           else:
             signal = "🔴 SELL / AVOID"
-        # 5. Package everything up with the dictionary labels
+        # Package everything up with the dictionary labels
           stock_package = {
             "symbol": ticker,
             "qty": 10,
             "buy_price": target_price,
             "live_price": live_market_price,
-            "status_signal": signal  # We add this label to remember the advice!
+            "status_signal": signal  
         }
           
           st.session_state.portfolio_list.append(stock_package)       
@@ -55,13 +55,13 @@ for item in st.session_state.portfolio_list:
       
 last_stock = st.session_state.portfolio_list[-1]['symbol']
 chart_data = yf.download(last_stock, period="50d", multi_level_index=False)
-# 1. Use mathematical mapping to see if each day closed higher (+) or lower (-) than the day before
+# Use mathematical mapping to see if each day closed higher (+) or lower (-) than the day before
 chart_data['Price_Change'] = chart_data['Close'].diff()
     
-    # 2. Assign color flags based on daily performance logic
+# Assign color flags based on daily performance logic
 chart_data['Color_Flag'] = ['#00cc66' if x >= 0 else '#ff3333' for x in chart_data['Price_Change']]
     
-    # 3. Build a visual dynamic Bar Chart instead of a solid line
+# Build a visual dynamic Bar Chart instead of a solid line
 fig = px.bar(
     chart_data,
     y="Close",
@@ -70,5 +70,5 @@ fig = px.bar(
     color_discrete_map="identity"
     )
     
-    # 4. Hide the background side legends so the dashboard looks perfectly clean
-    fig.update_layout(showlegend=False)
+# Hide the background side legends so the dashboard looks perfectly clean
+fig.update_layout(showlegend=False)
