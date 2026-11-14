@@ -26,7 +26,7 @@ if st.button("Add to Watchlist"):
             "live_price": live_market_price
         }
     
-        st.session_state.portfolio_list.append(stock_package)       
+         st.session_state.portfolio_list.append(stock_package)       
     else:
         st.error("Please enter a valid stock ticker symbol.")
         st.write("---")
