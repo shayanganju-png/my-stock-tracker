@@ -56,18 +56,18 @@ for item in st.session_state.portfolio_list:
 last_stock = st.session_state.portfolio_list[-1]['symbol']
 chart_data = yf.download(last_stock, period="50d", multi_level_index=False)
 # 1. Use mathematical mapping to see if each day closed higher (+) or lower (-) than the day before
-    chart_data['Price_Change'] = chart_data['Close'].diff()
+chart_data['Price_Change'] = chart_data['Close'].diff()
     
     # 2. Assign color flags based on daily performance logic
-    chart_data['Color_Flag'] = ['#00cc66' if x >= 0 else '#ff3333' for x in chart_data['Price_Change']]
+chart_data['Color_Flag'] = ['#00cc66' if x >= 0 else '#ff3333' for x in chart_data['Price_Change']]
     
     # 3. Build a visual dynamic Bar Chart instead of a solid line
-    fig = px.bar(
-        chart_data,
-        y="Close",
-        title=f"Market Block Trajectory: {last_stock}",
-        color="Color_Flag",
-        color_discrete_map="identity"
+fig = px.bar(
+    chart_data,
+    y="Close",
+    title=f"Market Block Trajectory: {last_stock}",
+    color="Color_Flag",
+    color_discrete_map="identity"
     )
     
     # 4. Hide the background side legends so the dashboard looks perfectly clean
