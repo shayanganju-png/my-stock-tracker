@@ -52,7 +52,7 @@ for item in st.session_state.portfolio_list:
     else:
         st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}% | Advice: {item['status_signal']}")
 
-if len(st.session_state.portfolio_list) > 0:    
+if st.session_state.portfolio_list:    
     last_stock = st.session_state.portfolio_list[-1]['symbol']
     chart_data = yf.download(last_stock, period="50d", multi_level_index=False)
 # Use mathematical mapping to see if each day closed higher (+) or lower (-) than the day before
