@@ -53,3 +53,22 @@ for item in st.session_state.portfolio_list:
         st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}% | Advice: {item['status_signal']}")
 
       
+if st.session_state.portfolio_list:
+    st.write("---")
+    st.subheader("📈 Live Trend Analytics")
+    
+    # 1. Grab the symbol of the very last stock you added to your watchlist
+    last_stock = st.session_state.portfolio_list[-1]['symbol']
+    
+    # 2. Download a 50-day market historical timeline for that stock ticker
+    chart_data = yf.download(last_stock, period="50d", multi_level_index=False)
+    
+    # 3. Use Plotly to draw a responsive, interactive line graph canvas
+    fig = px.line(
+        chart_data, 
+        y="Close", 
+        title=f"Historical Price Trajectory: {last_stock}"
+    )
+    
+    # 4. Project the visual graph widget model right onto your live webpage dashboard
+    st.plotly_chart(fig, use_container_width=True)
