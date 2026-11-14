@@ -50,9 +50,9 @@ for item in st.session_state.portfolio_list:
 
         if pct_change >= 0:
 # 1. Check if the portfolio list has stocks inside it
-if st.session_state.portfolio_list:
-    st.write("---")
-    st.subheader("📈 Live Trend Analytics")
+        if st.session_state.portfolio_list:
+           st.write("---")
+           st.subheader("📈 Live Trend Analytics")
     
     # 2. Build the visual responsive graph canvas using Plotly
     fig = px.line(
