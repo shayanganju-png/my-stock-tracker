@@ -15,11 +15,11 @@ if st.button("Add to Watchlist"):
           st.success(f"Added {ticker} to your tracking dashboard!")
         
         # 1. Download live market data from Wall Street
-        stock_data_fetch = yf.download(ticker, period="5d")
-        live_market_price = float(stock_data_fetch['Close'].iloc[-1])
-        
+          stock_data_fetch = yf.download(ticker, period="5d")
+          live_market_price = float(stock_data_fetch['Close'].iloc[-1])
+          
         # 2. Package everything up with the new dictionary labels
-        stock_package = {
+          stock_package = {
             "symbol": ticker,
             "qty": 10,
             "buy_price": target_price,
@@ -33,9 +33,9 @@ if st.button("Add to Watchlist"):
 st.subheader("📋 Portfolio Summary View")
 for item in st.session_state.portfolio_list:
  # Calculate the profit or loss percent
-    pct_change = ((item['live_price'] - item['buy_price']) / item['buy_price']) * 100
+        pct_change = ((item['live_price'] - item['buy_price']) / item['buy_price']) * 100
 
-    if pct_change >= 0:
-        st.success(f"🔺 {item['symbol']} | Live: ${item['live_price']:.2f} | Gain: +{pct_change:.2f}%")
-    else:
-        st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}%")
+        if pct_change >= 0:
+                st.success(f"🔺 {item['symbol']} | Live: ${item['live_price']:.2f} | Gain: +{pct_change:.2f}%")
+        else:
+                st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}%")
