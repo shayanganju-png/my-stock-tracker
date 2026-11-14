@@ -15,8 +15,8 @@ if st.button("Add to Watchlist"):
           st.success(f"Added {ticker} to your tracking dashboard!")
         
         # 1. Download live market data from Wall Street
-          stock_data_fetch = yf.download(ticker, period="5d")
-          live_market_price = float(stock_data_fetch['Close'].values[-1])
+          stock_data_fetch = yf.download(ticker, period="5d", multi_level_index=False)
+          live_market_price = float(stock_data_fetch['Close'].iloc[-1])
           
         # 2. Package everything up with the new dictionary labels
           stock_package = {
