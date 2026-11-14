@@ -12,12 +12,20 @@ notes = st.text_area("Why are you watching this stock?")
 # Save and display the target alert
 if st.button("Add to Watchlist"):
     if ticker != "":
-        st.success(f"Added {ticker} to your tracking dashboard!")
+          st.success(f"Added {ticker} to your tracking dashboard!")
+        
+        # 1. Download live market data from Wall Street
+        stock_data_fetch = yf.download(ticker, period="5d")
+        live_market_price = float(stock_data_fetch['Close'].iloc[-1])
+        
+        # 2. Package everything up with the new dictionary labels
         stock_package = {
             "symbol": ticker,
             "qty": 10,
-            "avg_price": target_price
+            "buy_price": target_price,
+            "live_price": live_market_price
         }
+    
         st.session_state.portfolio_list.append(stock_package)       
     else:
         st.error("Please enter a valid stock ticker symbol.")
