@@ -49,6 +49,20 @@ for item in st.session_state.portfolio_list:
         pct_change = ((item['live_price'] - item['buy_price']) / item['buy_price']) * 100
 
         if pct_change >= 0:
+# 1. Check if the portfolio list has stocks inside it
+if st.session_state.portfolio_list:
+    st.write("---")
+    st.subheader("📈 Live Trend Analytics")
+    
+    # 2. Build the visual responsive graph canvas using Plotly
+    fig = px.line(
+        history_data, 
+        y="Close", 
+        title=f"Historical Price Trajectory: {ticker}"
+    )
+    
+    # 3. Project the graph model layout onto the dashboard web page
+    st.plotly_chart(fig, use_container_width=True)
            st.success(f"🔺 {item['symbol']} | Live: ${item['live_price']:.2f} | Gain: +{pct_change:.2f}% | Advice: {item['status_signal']}")
         else:
            st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}% | Advice: {item['status_signal']}")
