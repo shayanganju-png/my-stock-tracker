@@ -31,7 +31,7 @@ if st.button("Add to Watchlist"):
           else:
             signal = "🔴 SELL / AVOID"
         # 5. Package everything up with the dictionary labels
-        stock_package = {
+          stock_package = {
             "symbol": ticker,
             "qty": 10,
             "buy_price": target_price,
