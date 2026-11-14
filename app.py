@@ -1,5 +1,6 @@
 import streamlit as st
 import yfinance as yf
+import plotly.express as px
 if "portfolio_list" not in st.session_state:
     st.session_state.portfolio_list=[]
 st.title("📈 My Personal Stock Watchlist")
@@ -17,15 +18,27 @@ if st.button("Add to Watchlist"):
         # 1. Download live market data from Wall Street
           stock_data_fetch = yf.download(ticker, period="5d", multi_level_index=False)
           live_market_price = float(stock_data_fetch['Close'].iloc[-1])
-          
-        # 2. Package everything up with the new dictionary labels
-          stock_package = {
+         # 2. Download a longer 50-day timeline to check market trends
+        history_data = yf.download(ticker, period="50d", multi_level_index=False)
+        
+        # 3. Calculate the short-term trend vs long-term trend
+        short_trend = float(history_data['Close'].rolling(window=10).mean().iloc[-1])
+        long_trend = float(history_data['Close'].rolling(window=30).mean().iloc[-1])
+        
+        # 4. Core Decision Logic: Compare the trends to create a Buy/Sell signal
+        if short_trend > long_trend:
+            signal = "🟢 STRONG BUY"
+        else:
+            signal = "🔴 SELL / AVOID"
+        # 5. Package everything up with the dictionary labels
+        stock_package = {
             "symbol": ticker,
             "qty": 10,
             "buy_price": target_price,
-            "live_price": live_market_price
+            "live_price": live_market_price,
+            "status_signal": signal  # We add this label to remember the advice!
         }
-    
+          
           st.session_state.portfolio_list.append(stock_package)       
     else:
         st.error("Please enter a valid stock ticker symbol.")
@@ -35,7 +48,8 @@ for item in st.session_state.portfolio_list:
  # Calculate the profit or loss percent
         pct_change = ((item['live_price'] - item['buy_price']) / item['buy_price']) * 100
 
-        if pct_change >= 0:
-                st.success(f"🔺 {item['symbol']} | Live: ${item['live_price']:.2f} | Gain: +{pct_change:.2f}%")
-        else:
-                st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}%")
+    if pct_change >= 0:
+        st.success(f"🔺 {item['symbol']} | Live: ${item['live_price']:.2f} | Gain: +{pct_change:.2f}% | Advice: {item['status_signal']}")
+    else:
+        st.error(f"🔻 {item['symbol']} | Live: ${item['live_price']:.2f} | Loss: {pct_change:.2f}% | Advice: {item['status_signal']}")
+      
