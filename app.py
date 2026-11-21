@@ -85,4 +85,4 @@ fig.update_layout(
     xaxis_title="Date",
     yaxis_title="Stock Price ($)"
 )        
-    st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
