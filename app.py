@@ -60,28 +60,25 @@ if st.session_state.portfolio_list:
         
         last_stock = st.session_state.portfolio_list[-1]['symbol']
         chart_data = yf.download(last_stock, period="1mo", multi_level_index=False)
-            last_stock,
-            period="1mo",
-            multi_level_index=False
-)       
-fig = go.Figure(data=[go.Candlestick(
-    x=chart_data.index,
-    open=chart_data["Open"],
-    high=chart_data["High"],
-    low=chart_data["Low"],
-    close=chart_data["Close"],
-    increasing_line_color="#00ff88",
-    increasing_fillcolor="#00cc66",
-    decreasing_line_color="#ff4444",
-    decreasing_fillcolor="#ff3333"
-)])
-fig.update_layout(
-    title=f"📈 {last_stock} Stock Price Analysis",
-    template="plotly_dark",
-    height=550,
-    showlegend=False,
-    xaxis_rangeslider_visible=False,
-    xaxis_title="Date",
-    yaxis_title="Stock Price ($)"
-)        
-st.plotly_chart(fig, use_container_width=True)
+           
+        fig = go.Figure(data=[go.Candlestick(
+            x=chart_data.index,
+            open=chart_data["Open"],
+            high=chart_data["High"],
+            low=chart_data["Low"],
+            close=chart_data["Close"],
+            increasing_line_color="#00ff88",
+            increasing_fillcolor="#00cc66",
+            decreasing_line_color="#ff4444",
+            decreasing_fillcolor="#ff3333"
+        )])
+        fig.update_layout(
+            title=f"📈 {last_stock} Stock Price Analysis",
+            template="plotly_dark",
+            height=550,
+            showlegend=False,
+            xaxis_rangeslider_visible=False,
+            xaxis_title="Date",
+            yaxis_title="Stock Price ($)"
+        )        
+        st.plotly_chart(fig, use_container_width=True)
