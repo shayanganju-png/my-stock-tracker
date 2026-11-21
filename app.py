@@ -64,7 +64,13 @@ if st.session_state.portfolio_list:
         # Calculate daily trend values for block coloring
         chart_data['Price_Change'] = chart_data['Close'].diff()
         chart_data['Color_Flag'] = ['#00cc66' if x >= 0 else '#ff3333' for x in chart_data['Price_Change']]
-        
+ last_stock = st.session_state.portfolio_list[-1]["symbol"]
+
+chart_data = yf.download(
+    last_stock,
+    period="1mo",
+    multi_level_index=False
+)       
 fig = go.Figure(data=[go.Candlestick(
     x=chart_data.index,
     open=chart_data["Open"],
